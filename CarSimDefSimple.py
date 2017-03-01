@@ -28,7 +28,7 @@ def SimNodeToNode(EngineOn,x1,v1,a1,StartT,EndT,startEng):
     
     ratio = (60/13)*(60/16)
     r = [ratio, ratio/1.37]#/1.37] #transmission gear ratio
-    vShift = 100*0.44704 #speed at which the hub shifts gears 
+    vShift = 10*0.44704 #speed at which the hub shifts gears 
     eff = .9 #transmission efficiency
     clutchEngage = 1800 #RPM when clutch engages
     
@@ -55,10 +55,10 @@ def SimNodeToNode(EngineOn,x1,v1,a1,StartT,EndT,startEng):
     g = 9.804 #m/s^s, gravitational acceleration
     
     #--------------------Simulation Parameters---------------------------------
-    dt = .5 #seconds, timestep for simulation, smaller means better resolution, but slower computation time
+    dt = .1 #seconds, timestep for simulation, smaller means better resolution, but slower computation time
     nPre = 6 #digits of preision for return
     t = []
-    for te in range(int(StartT),int((EndT/dt)+1)):
+    for te in range(int(StartT),int((EndT/dt))):
         t.append(round(te*dt,8))
     
     #----------------------Track Variables-------------------------------------
@@ -127,6 +127,7 @@ def SimNodeToNode(EngineOn,x1,v1,a1,StartT,EndT,startEng):
                RPM = min(RPM, RPMMax)
                RPM = max(RPM, clutchEngage)
                ft = torque(RPM) * eff * r[1]
+               print(RPM)
 
            
             Fxf = ft*(1-pr)/(.5*d)
